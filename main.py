@@ -70,14 +70,48 @@ def test_is_superprime():
     assert (is_superprime(521)==False)
     assert (is_superprime(101)==False)
 
+def is_antipalindrome(n):
+    '''
+    Functie care determina daca un numar este antipalindrom
+    :param n: int
+    :return: bool, true daca numarul este antipalindrom, false altfel
+    '''
+    clona_n = n
+    invers_n = 0
+    nr_cifre = 0
+    while clona_n:
+        invers_n = invers_n*10+clona_n % 10
+        clona_n = int(clona_n/10)
+        nr_cifre += 1
+        if nr_cifre % 2 == 1:
+            ok = 0
+        else:
+            ok = 1
+
+    while invers_n:
+        if invers_n % 10 == n % 10:
+            ok = ok+1
+        if ok == 2:
+            return False
+        invers_n = int(invers_n/10)
+        n /= 10
+    return True
+
+def test_is_antipalindrome():
+    '''Functie care testeaza functia antipalindrom'''
+    assert (is_antipalindrome(1234) == True)
+    assert (is_antipalindrome(2783) == True)
+    assert (is_antipalindrome(2772) == False)
+
 
 def main():
     test_is_palindrome()
     test_prim()
     test_is_superprime()
-    print("Meniu\n 1.Palindrom \n 2. Superprim \n 3. Exit \n")
+    test_is_antipalindrome()
+    print("Meniu\n 1.Palindrom \n 2. Superprim \n 3.Antipalindrom \n 4.Exit \n")
     optiune=0
-    while optiune!=3:
+    while optiune!=4:
         optiune=int(input("alegeti o optiune din meniu: "))
         if optiune==1:
             nr1=int(input("Introdu numarul: "))
@@ -92,9 +126,14 @@ def main():
             else:
                 print("Numarul nu este superprim. \n")
         elif optiune==3:
+            nr3=int(input("Introdu numarul: "))
+            if is_antipalindrome(nr3)==True:
+                print("Numarul este antipalindrom. \n")
+            else:
+                print("Numarul nu este antipalindrom. \n")
+        elif optiune==4:
             print("aplicatia s-a inchis")
             break
 main()
-
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
